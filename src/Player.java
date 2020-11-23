@@ -30,10 +30,10 @@ public class Player extends GameObject{
     private void collision(){
         for(int i = 0; i < handler.objects.size(); i ++){
             GameObject tempObject = handler.objects.get(i);
-            if(tempObject.getId() == ID.BasicEnemy){ //the temp object is essentially a ref to a basic enemy
+            if(tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy){ //the temp object is essentially a ref to a basic enemy
                 //check for collisions
                 if(getBounds().intersects(tempObject.getBounds())){
-                    HUD.HEALTH -= 2;
+                    HUD.health -= 2;
                 }
             }
         }

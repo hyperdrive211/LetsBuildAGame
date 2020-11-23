@@ -5,12 +5,12 @@ import java.awt.*;
  * Update Comments About Program Here
  **/
 public class BasicEnemy extends GameObject {
-
-    public BasicEnemy(int x, int y, ID id) {
+    private Handler handler;
+    public BasicEnemy(int x, int y, ID id, Handler handler) {
         super(x, y, id);
-
         velY = 5;
         velX = 5;
+        this.handler = handler;
     }
 
     public Rectangle getBounds(){
@@ -24,6 +24,7 @@ public class BasicEnemy extends GameObject {
 
        if(y <= 0 || y >= Game.HEIGHT - 32) velY *= -1;
        if(x <=0 || x >= Game.WIDTH - 16) velX *= -1;
+       handler.addObject(new Trail(x,y,ID.Trail, 16, 16, 0.02f,Color.red, handler ));
 
     }
 
