@@ -24,13 +24,15 @@ public class Player extends GameObject{
          y += velY;
          x = Game.clamp(x, 0, Game.WIDTH -37);
          y = Game.clamp(y, 0, Game.HEIGHT - 60);
+
+         handler.addObject(new Trail(x,y, ID.Trail, 32, 32,0.05f, Color.WHITE, handler));
          collision();
     }
 
     private void collision(){
         for(int i = 0; i < handler.objects.size(); i ++){
             GameObject tempObject = handler.objects.get(i);
-            if(tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy){ //the temp object is essentially a ref to a basic enemy
+            if(tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy || tempObject.getId() == ID.SmartEnemy){ //the temp object is essentially a ref to a basic enemy
                 //check for collisions
                 if(getBounds().intersects(tempObject.getBounds())){
                     HUD.health -= 2;
