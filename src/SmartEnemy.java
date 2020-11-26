@@ -24,7 +24,7 @@ public class SmartEnemy extends GameObject {
     }
 
     public Rectangle getBounds(){
-        return new Rectangle(x,y,16,16);
+        return new Rectangle((int)x,(int)y,16,16);
     }
 
     @Override
@@ -35,18 +35,18 @@ public class SmartEnemy extends GameObject {
         float diffX = x - player.getX() - 8;
         float diffY = y - player.getY() - 8;
         float distance = (float) Math.sqrt((x - player.getX()) * (x - player.getX()) + (y - player.getY()) * (y - player.getY()));
-        velX = (int)((-1.0/distance) * diffX);
-        velY = (int)((-1.0/distance) * diffY);
+        velX = (float)((-1.0/distance) * diffX);
+        velY = (float)((-1.0/distance) * diffY);
 
         if(y <= 0 || y >= Game.HEIGHT - 32) velY *= -1;
         if(x <=0 || x >= Game.WIDTH - 16) velX *= -1;
-        handler.addObject(new Trail(x,y,ID.Trail, 16, 16, 0.02f,Color.cyan, handler ));
+        handler.addObject(new Trail((int)x,(int)y,ID.Trail, 16, 16, 0.02f,Color.cyan, handler ));
 
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.green);
-        g.fillRect(x,y,16,16);
+        g.fillRect((int)x,(int)y,16,16);
     }
 }

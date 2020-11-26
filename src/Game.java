@@ -16,18 +16,32 @@ public class Game extends Canvas implements Runnable {
     private Random r;
     private HUD hud;
     private Spawn spawner;
+    private Menu menu;
+
+    public enum STATE {
+        Menu, Game, Help
+    }
+
+    public STATE gameState = STATE.Menu;
 
 
 
    public Game(){
+
        handler = new Handler();
+       menu = new Menu(this, handler);
        this.addKeyListener(new KeyInput(handler));
-        new Window(WIDTH, HEIGHT, "Let's Build a game", this);
+       this.addMouseListener(menu);
+       new Window(WIDTH, HEIGHT, "Let's Build a game", this);
 
         hud = new HUD();
         spawner = new Spawn(handler, hud);
         r = new Random();
-        handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
+        menu = new Menu(this, handler);
+        if(gameState == STATE.Game){
+            handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
+        }
+
     }
 
     public synchronized void start(){
@@ -75,8 +89,12 @@ public class Game extends Canvas implements Runnable {
 
     private void tick(){
        handler.tick();
-       hud.tick();
-       spawner.tick();
+       if(gameState == STATE.Game){
+           hud.tick();
+           spawner.tick();
+       } else if(gameState == STATE.Menu) {
+           menu.tick();
+       }
     }
 
     private void render(){
@@ -88,15 +106,19 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         g.fillRect(0,0,WIDTH, HEIGHT);
-
         handler.render(g);
+        if(gameState == STATE.Game){
+            hud.render(g);
+        } else if(gameState == STATE.Menu) {
+            menu.render(g);
+        }
 
-        hud.render(g);
+
         g.dispose();
         bs.show();
     }
 
-    public static int clamp(int var, int min, int max){
+    public static float clamp(float var, float min, float max){
        if(var >= max)
        return var = max;
       else if(var <= min)

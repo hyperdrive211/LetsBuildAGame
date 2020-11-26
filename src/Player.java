@@ -16,7 +16,7 @@ public class Player extends GameObject{
     }
 
     public Rectangle getBounds(){
-        return new Rectangle(x,y,32, 32);
+        return new Rectangle((int)x,(int)y,32, 32);
     }
 
     public void tick(){
@@ -25,7 +25,7 @@ public class Player extends GameObject{
          x = Game.clamp(x, 0, Game.WIDTH -37);
          y = Game.clamp(y, 0, Game.HEIGHT - 60);
 
-         handler.addObject(new Trail(x,y, ID.Trail, 32, 32,0.05f, Color.WHITE, handler));
+         handler.addObject(new Trail((int)x,(int)y, ID.Trail, 32, 32,0.05f, Color.WHITE, handler));
          collision();
     }
 
@@ -47,7 +47,7 @@ public class Player extends GameObject{
         g.setColor(Color.red);
         g2d.draw(getBounds());
         g.setColor(Color.white);
-        g.fillRect(x, y, 32, 32);
+        g.fillRect((int)x, (int)y, 32, 32);
     }
 
 
